@@ -2,6 +2,13 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
+  app: {
+    head: {
+      // 💡 يتم استخدام هذا القالب لجميع الصفحات
+      titleTemplate: '%s | SMD Digital Agency', 
+      
+    }
+  },
   modules: [
     '@nuxtjs/i18n',
     '@nuxt/icon',
