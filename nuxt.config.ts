@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       // 💡 يتم استخدام هذا القالب لجميع الصفحات
-      titleTemplate: '%s | SMD Digital Agency', 
+      titleTemplate: 'SMD Digital Agency', 
       
     }
   },
