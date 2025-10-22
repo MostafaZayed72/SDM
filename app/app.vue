@@ -4,8 +4,11 @@ import { useLocaleHead } from '#i18n';
 useHead(useLocaleHead({
   addDirAttribute: true, 
   identifierAttribute: 'id',
-  addSeoAttributes: true 
+  addSeoAttributes: true ,
+   title: 'SMD - Digital Marketing Agency',
 }));
+
+
 </script>
 
 <template>
