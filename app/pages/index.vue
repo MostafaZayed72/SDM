@@ -1,5 +1,6 @@
 <template>
     <div>
         <HomeHero />
-    </div>
+<HomeSubHero />
+</div>
 </template>

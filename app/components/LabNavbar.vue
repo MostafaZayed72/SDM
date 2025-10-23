@@ -52,7 +52,7 @@ onUnmounted(() => {
           'translate-y-0': isVisible 
        }">
        
-    <div class="bg-white shadow-xl flex justify-between items-center px-16 py-4 md:text-xl">
+    <div class="bg-white/70 backdrop-blur-md shadow-xl flex justify-between items-center px-16 py-4 md:text-xl">
       <div class="flex justify-center items-center gap-16 text-tow">
         <img class="w-24 h-16 rounded-xl" src="~/assets/logo.png" alt="">
         <h1 class=" font-bold cursor-pointer hover:text-green-500 transition duration-300">{{ $t('Home') }}</h1>
