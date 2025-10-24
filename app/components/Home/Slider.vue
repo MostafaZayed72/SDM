@@ -1,27 +1,82 @@
 <template>
-  <div >
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="w-full bg-gradient-to-b from-gray-50 to-white ">
+    <div class="max-w-6xl mx-auto px-4">
+    
 
-      <div class="relative overflow-hidden bg-white shadow-xl rounded-lg border border-gray-100">
-        
-        <div class="flex auto-scroll-logos">
-          
-          <div 
-            v-for="(logo, index) in allLogos" 
-            :key="`a-${index}`" 
-            class="flex-shrink-0 w-36 h-24 p-4 flex items-center justify-center grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-300"
+      <!-- السلايدر -->
+      <div class="relative">
+        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 relative">
+          <!-- الأسهم -->
+          <button
+            @click="prevSlide"
+            class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-blue-600 text-gray-700 hover:text-white rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110"
           >
-            <img :src="logo.src" :alt="logo.alt" class="max-h-full max-w-full object-contain" />
-          </div>
+            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
 
-          <div 
-            v-for="(logo, index) in allLogos" 
-            :key="`b-${index}`" 
-            class="flex-shrink-0 w-36 h-24 p-4 flex items-center justify-center grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition duration-300"
+          <button
+            @click="nextSlide"
+            class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-10 bg-white hover:bg-blue-600 text-gray-700 hover:text-white rounded-full p-2 md:p-3 shadow-lg transition-all duration-300 hover:scale-110"
           >
-            <img :src="logo.src" :alt="logo.alt" class="max-h-full max-w-full object-contain" />
-          </div>
+            <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
 
+          <!-- السلايدات -->
+          <div class="overflow-hidden px-8 md:px-12">
+            <div class="relative flex items-center" style="min-height: 180px">
+              <div
+                v-for="(group, groupIndex) in slideGroups"
+                :key="groupIndex"
+                :class="[
+                  'absolute inset-0 transition-all duration-500 flex items-center',
+                  groupIndex === currentSlide
+                    ? 'opacity-100 translate-x-0'
+                    : groupIndex < currentSlide
+                    ? 'opacity-0 -translate-x-full'
+                    : 'opacity-0 translate-x-full'
+                ]"
+              >
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
+                  <div
+                    v-for="(logo, logoIndex) in group"
+                    :key="logoIndex"
+                    class="flex items-center justify-center p-4 md:p-6 rounded-xl hover:bg-gray-50 transition-all duration-300 group"
+                  >
+                    <img
+                      :src="logo.src"
+                      :alt="logo.alt"
+                      class="max-w-full h-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
+                      style="max-height: 60px"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-center gap-3 mt-8">
+          <button
+            v-for="(group, index) in slideGroups"
+            :key="index"
+            @click="goToSlide(index)"
+            :class="[
+              'transition-all duration-300 rounded-full',
+              currentSlide === index
+                ? 'w-12 h-3 bg-one'
+                : 'w-3 h-3 bg-tow hover:bg-three'
+            ]"
+          />
+        </div>
+
+        <!-- مؤشر السلايد -->
+        <div class="text-center mt-4 text-sm text-gray-500">
+          {{ currentSlide + 1 }} / {{ slideGroups.length }}
         </div>
       </div>
     </div>
@@ -29,52 +84,99 @@
 </template>
 
 <script setup>
-  // البيانات الثابتة (اللوجوهات)
-  const allLogos = [
-    { src: 'https://placehold.co/100x40/3B82F6/FFFFFF?text=Logo+1', alt: 'Client Logo 1' },
-    { src: 'https://placehold.co/100x40/10B981/FFFFFF?text=Logo+2', alt: 'Client Logo 2' },
-    { src: 'https://placehold.co/100x40/EF4444/FFFFFF?text=Logo+3', alt: 'Client Logo 3' },
-    { src: 'https://placehold.co/100x40/F59E0B/FFFFFF?text=Logo+4', alt: 'Client Logo 4' },
-    { src: 'https://placehold.co/100x40/8B5CF6/FFFFFF?text=Logo+5', alt: 'Client Logo 5' },
-    { src: 'https://placehold.co/100x40/14B8A6/FFFFFF?text=Logo+6', alt: 'Client Logo 6' },
-    { src: 'https://placehold.co/100x40/6366F1/FFFFFF?text=Logo+7', alt: 'Client Logo 7' },
-    { src: 'https://placehold.co/100x40/D97706/FFFFFF?text=Logo+8', alt: 'Client Logo 8' },
-    // **ملاحظة:** يفضل استبدال الروابط الموقتة بروابط صور اللوجوهات الحقيقية
-  ];
-</script>
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 
-<style scoped>
-/*
-  تعريف حركة التمرير التلقائي اللانهائية (Infinite Auto Scroll) باستخدام CSS
-*/
+const currentSlide = ref(0);
+const windowWidth = ref(1024); // قيمة افتراضية
+let autoPlayInterval = null;
 
-/* 1. تعريف الحركة (Keyframes) */
-@keyframes scrollLeft {
-  /* في البداية، تكون في الموضع الأصلي (0%) */
-  0% {
-    transform: translateX(0);
-  }
-  /* في النهاية، تتحرك مسافة تعادل طول المجموعة الأولى من اللوجوهات (50% من طول الشريط) */
-  100% {
-    transform: translateX(-50%);
-  }
-}
+const allLogos = [
+  { src: 'https://placehold.co/120x60/3B82F6/FFFFFF?text=Logo+1', alt: 'شعار 1' },
+  { src: 'https://placehold.co/120x60/10B981/FFFFFF?text=Logo+2', alt: 'شعار 2' },
+  { src: 'https://placehold.co/120x60/EF4444/FFFFFF?text=Logo+3', alt: 'شعار 3' },
+  { src: 'https://placehold.co/120x60/F59E0B/FFFFFF?text=Logo+4', alt: 'شعار 4' },
+  { src: 'https://placehold.co/120x60/8B5CF6/FFFFFF?text=Logo+5', alt: 'شعار 5' },
+  { src: 'https://placehold.co/120x60/14B8A6/FFFFFF?text=Logo+6', alt: 'شعار 6' },
+  { src: 'https://placehold.co/120x60/6366F1/FFFFFF?text=Logo+7', alt: 'شعار 7' },
+  { src: 'https://placehold.co/120x60/D97706/FFFFFF?text=Logo+8', alt: 'شعار 8' },
+  { src: 'https://placehold.co/120x60/EC4899/FFFFFF?text=Logo+9', alt: 'شعار 9' },
+  { src: 'https://placehold.co/120x60/22D3EE/FFFFFF?text=Logo+10', alt: 'شعار 10' },
+  { src: 'https://placehold.co/120x60/4ADE80/FFFFFF?text=Logo+11', alt: 'شعار 11' },
+  { src: 'https://placehold.co/120x60/F87171/FFFFFF?text=Logo+12', alt: 'شعار 12' },
+];
 
-/* 2. تطبيق الحركة على الشريط */
-.auto-scroll-logos {
-  /* تحديد مدة الحركة (ثانيتين) ونوعها (خطي - لا يتسارع أو يتباطأ) وتكرارها اللانهائي */
-  animation: scrollLeft 20s linear infinite; /* تم تعديل المدة إلى 20 ثانية للحركة بالكامل */
+// حساب عدد اللوجوهات لكل سلايد بناءً على حجم الشاشة
+const logosPerSlide = computed(() => {
+  return windowWidth.value < 768 ? 6 : 8;
+});
+
+// نقسم اللوجوهات بناءً على حجم الشاشة
+const slideGroups = computed(() => {
+  const groups = [];
+  const itemsPerSlide = logosPerSlide.value;
   
-  /* منع حركة الفأرة من إيقاف أو إبطاء الحركة */
-  pointer-events: none; 
+  for (let i = 0; i < allLogos.length; i += itemsPerSlide) {
+    groups.push(allLogos.slice(i, i + itemsPerSlide));
+  }
+  
+  return groups;
+});
 
-  /* ضبط العرض ليكون مضاعفاً لحاوية العرض لإتاحة مساحة للحركة */
-  width: max-content; 
-}
+const totalSlides = computed(() => {
+  return slideGroups.value?.length || 1;
+});
 
-/* 3. إيقاف الحركة عند التحويم (اختياري) */
-/* يمكنك إزالة هذا الجزء إذا كنت تريد الحركة المستمرة دون توقف */
-.auto-scroll-logos:hover {
-  animation-play-state: paused;
-}
-</style>
+const goToSlide = (index) => {
+  currentSlide.value = index;
+};
+
+const nextSlide = () => {
+  const total = totalSlides.value;
+  if (total > 0) {
+    currentSlide.value = (currentSlide.value + 1) % total;
+  }
+};
+
+const prevSlide = () => {
+  const total = totalSlides.value;
+  if (total > 0) {
+    currentSlide.value = (currentSlide.value - 1 + total) % total;
+  }
+};
+
+// تتبع تغيير حجم الشاشة
+const handleResize = () => {
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+    // إعادة تعيين السلايد للأول عند تغيير حجم الشاشة
+    currentSlide.value = 0;
+  }
+};
+
+onMounted(() => {
+  // تعيين القيمة الحقيقية للـ window width
+  if (typeof window !== 'undefined') {
+    windowWidth.value = window.innerWidth;
+    // إضافة مستمع لتغيير حجم الشاشة
+    window.addEventListener('resize', handleResize);
+  }
+  
+  // تشغيل تلقائي كل 4 ثواني
+  autoPlayInterval = setInterval(() => {
+    const total = totalSlides.value;
+    if (total > 0) {
+      currentSlide.value = (currentSlide.value + 1) % total;
+    }
+  }, 4000);
+});
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', handleResize);
+  }
+  
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+  }
+});
+</script>
