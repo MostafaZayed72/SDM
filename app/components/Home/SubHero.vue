@@ -3,7 +3,7 @@
     تطبيق تأثير الظهور من اليمين (fade-right) المناسب للمحتوى العربي 
     باستخدام سمة data-aos، وذلك بالاعتماد على تهيئة AOS في الـ Plugin
   -->
-  <div class="creative-story-section container mx-auto px-4 py-16">
+  <div class="creative-story-section container mx-auto px-4 ">
     <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
 
       <!-- جزء العنوان الكبير والبنفسجي -->
