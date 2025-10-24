@@ -72,7 +72,7 @@
   // البيانات الثابتة (اللوجيك)
   const projects = [
     { 
-      title: 'كلنا نمتك', 
+      title: 'كلنا يمناك', 
       image: 'https://framerusercontent.com/images/fgVO2sBtPdz2QeJ8WrXmVaN0LQ8.png?scale-down-to=1024', 
       link: '/project/tourism', 
       typeOrDate: '٢٠٢٤ | حملة يوم التأسيس',
