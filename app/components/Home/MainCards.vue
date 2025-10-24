@@ -122,6 +122,3 @@
   ];
 </script>
 
-<style scoped>
-/* لا حاجة لـ CSS مخصص */
-</style>
