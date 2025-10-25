@@ -1,11 +1,10 @@
 <template>
   <div class="w-full bg-gradient-to-b from-gray-50 to-white ">
     <div class="max-w-6xl mx-auto px-4">
-    
 
       <!-- السلايدر -->
       <div class="relative">
-        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12 relative">
+        <div class="bg-white rounded-2xl shadow-lg p-4 md:p-12 relative">
           <!-- الأسهم -->
           <button
             @click="prevSlide"
@@ -26,8 +25,8 @@
           </button>
 
           <!-- السلايدات -->
-          <div class="overflow-hidden px-8 md:px-12">
-            <div class="relative flex items-center" style="min-height: 180px">
+          <div class="overflow-hidden px-6 md:px-12">
+            <div class="relative flex items-center min-h-[160px] md:min-h-[220px]">
               <div
                 v-for="(group, groupIndex) in slideGroups"
                 :key="groupIndex"
@@ -40,17 +39,16 @@
                     : 'opacity-0 translate-x-full'
                 ]"
               >
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 w-full">
+                <div class="grid grid-cols-3 md:grid-cols-4 gap-x-2 gap-y-2 md:gap-x-6 md:gap-y-6 w-full">
                   <div
                     v-for="(logo, logoIndex) in group"
                     :key="logoIndex"
-                    class="flex items-center justify-center p-4 md:p-6 rounded-xl hover:bg-gray-50 transition-all duration-300 group"
+                    class="flex items-center justify-center p-2 md:p-5 rounded-xl hover:bg-gray-50 transition-all duration-300 group"
                   >
                     <img
                       :src="logo.src"
                       :alt="logo.alt"
-                      class="max-w-full h-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110"
-                      style="max-height: 60px"
+                      class="max-w-full h-auto object-contain grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300 group-hover:scale-110 max-h-[40px] md:max-h-[50px]"
                     />
                   </div>
                 </div>
